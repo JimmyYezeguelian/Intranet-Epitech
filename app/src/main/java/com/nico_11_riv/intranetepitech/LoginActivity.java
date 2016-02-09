@@ -29,6 +29,8 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Random;
+
 @EActivity(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity {
 
@@ -72,22 +74,26 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    @UiThread
-    void connect(String lr) {
-        vlogin.setText(lr);
+    String generateToken() {
+        char[] chars = "abcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 26; i++) {
+            char c = chars[random.nextInt(chars.length)];
+            sb.append(c);
+        }
+        return (sb.toString());
     }
 
     boolean connectNetwork(String login, String passwd) {
         LoginRequest lr = new LoginRequest(login, passwd);
-
-        restapi.setCookie("PHPSESSID", "tabite");
-
+        String tokengenerate = generateToken();
+        restapi.setCookie("PHPSESSID", tokengenerate);
         restapi.getToken(lr);
-        connect(restapi.getCookie("PHPSESSID"));
-        /*SUser suser = new SUser(login, passwd, restapi.gettoken(login, passwd));
+        SUser suser = new SUser(login, passwd, tokengenerate);
         if (suser.isError() == true) {
             return true;
-        }*/
+        }
         return false;
     }
 
@@ -156,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
                 internetError();
             } else {
                 if (connectNetwork(login, passwd) == false) {
-                    //startActivity(new Intent(this, ProfileActivity_.class));
+                    startActivity(new Intent(this, ProfileActivity_.class));
                 }
             }
         }
