@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
-import com.nico_11_riv.intranetepitech.API.IntraAPI;
+import com.nico_11_riv.intranetepitech.API.herokuapi;
 import com.nico_11_riv.intranetepitech.API.Requests.RegisterEventRequest;
 import com.nico_11_riv.intranetepitech.API.Requests.TokenRequest;
 import com.nico_11_riv.intranetepitech.API.Requests.unRegisterEventRequest;
@@ -37,7 +37,7 @@ import java.util.Objects;
 @EFragment(R.layout.listschedule)
 public class ListScheduleFragment extends Fragment implements AdapterView.OnItemClickListener {
     @RestService
-    IntraAPI API;
+    herokuapi API;
     @Bean
     APIErrorHandler ErrorHandler;
     @ViewById

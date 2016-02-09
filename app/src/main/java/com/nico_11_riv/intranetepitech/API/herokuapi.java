@@ -14,8 +14,8 @@ import org.androidannotations.api.rest.RestClientErrorHandling;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 
-@Rest(rootUrl = "https://epitech-api.herokuapp.com", converters = {StringHttpMessageConverter.class, FormHttpMessageConverter.class})
-public interface IntraAPI extends RestClientErrorHandling {
+@Rest(rootUrl = "https://epitech-intrapi.herokuapp.com", converters = {StringHttpMessageConverter.class, FormHttpMessageConverter.class})
+public interface herokuapi extends RestClientErrorHandling {
     @Post("/login")
     String getToken(LoginRequest lr);
 

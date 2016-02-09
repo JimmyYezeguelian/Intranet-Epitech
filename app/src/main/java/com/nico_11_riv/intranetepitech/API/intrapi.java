@@ -2,7 +2,6 @@ package com.nico_11_riv.intranetepitech.API;
 
 import com.nico_11_riv.intranetepitech.API.Requests.LoginRequest;
 
-import org.androidannotations.annotations.rest.Get;
 import org.androidannotations.annotations.rest.Post;
 import org.androidannotations.annotations.rest.RequiresCookie;
 import org.androidannotations.annotations.rest.Rest;
@@ -14,11 +13,10 @@ import org.springframework.http.converter.StringHttpMessageConverter;
  */
 
 @Rest(rootUrl = "https://intra.epitech.eu", converters = {StringHttpMessageConverter.class, FormHttpMessageConverter.class})
-public interface api {
+public interface intrapi {
     @Post("/")
     @RequiresCookie("PHPSESSID")
-    String gettoken(LoginRequest lr);
-    //String gettoken(String login, String pass);
+    String getToken(LoginRequest lr);
 
     void setCookie(String name, String value);
     String getCookie(String name);

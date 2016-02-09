@@ -12,9 +12,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
-import com.nico_11_riv.intranetepitech.API.IntraAPI;
+import com.nico_11_riv.intranetepitech.API.herokuapi;
 import com.nico_11_riv.intranetepitech.API.Requests.LoginRequest;
-import com.nico_11_riv.intranetepitech.API.api;
+import com.nico_11_riv.intranetepitech.API.intrapi;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.SUser;
 import com.nico_11_riv.intranetepitech.Database.User;
 
@@ -27,15 +27,16 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
+import org.springframework.http.ResponseEntity;
 
 @EActivity(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity {
 
     @RestService
-    IntraAPI API;
+    herokuapi API;
 
     @RestService
-    api restapi;
+    intrapi restapi;
 
     @Bean
     APIErrorHandler ErrorHandler;
@@ -72,15 +73,17 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @UiThread
-    void connect() {
-        vlogin.setText(restapi.getCookie("PHPSESSID"));
+    void connect(String lr) {
+        vlogin.setText(lr);
     }
 
     boolean connectNetwork(String login, String passwd) {
         LoginRequest lr = new LoginRequest(login, passwd);
-        restapi.setCookie("PHPSESSID", "toto");
-        restapi.gettoken(lr);
-        connect();
+
+        restapi.setCookie("PHPSESSID", "tabite");
+
+        restapi.getToken(lr);
+        connect(restapi.getCookie("PHPSESSID"));
         /*SUser suser = new SUser(login, passwd, restapi.gettoken(login, passwd));
         if (suser.isError() == true) {
             return true;

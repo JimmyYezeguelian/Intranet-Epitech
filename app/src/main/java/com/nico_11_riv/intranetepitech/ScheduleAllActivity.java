@@ -18,7 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
-import com.nico_11_riv.intranetepitech.API.IntraAPI;
+import com.nico_11_riv.intranetepitech.API.herokuapi;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.CircleTransform;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.GInfos;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Planning.SPlanning;
@@ -52,7 +52,7 @@ public class ScheduleAllActivity extends AppCompatActivity implements Navigation
     private static int week = 0;
 
     @RestService
-    IntraAPI API;
+    herokuapi API;
 
     @Bean
     APIErrorHandler ErrorHandler;
