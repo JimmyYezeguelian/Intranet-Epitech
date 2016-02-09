@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
 import com.nico_11_riv.intranetepitech.API.IntraAPI;
 import com.nico_11_riv.intranetepitech.API.Requests.LoginRequest;
+import com.nico_11_riv.intranetepitech.API.api;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.SUser;
 import com.nico_11_riv.intranetepitech.Database.User;
 
@@ -32,6 +33,9 @@ public class LoginActivity extends AppCompatActivity {
 
     @RestService
     IntraAPI API;
+
+    @RestService
+    api restapi;
 
     @Bean
     APIErrorHandler ErrorHandler;
@@ -67,12 +71,20 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @UiThread
+    void connect() {
+        vlogin.setText(restapi.getCookie("PHPSESSID"));
+    }
+
     boolean connectNetwork(String login, String passwd) {
         LoginRequest lr = new LoginRequest(login, passwd);
-        SUser suser = new SUser(login, passwd, API.getToken(lr));
+        restapi.setCookie("PHPSESSID", "toto");
+        restapi.gettoken(lr);
+        connect();
+        /*SUser suser = new SUser(login, passwd, restapi.gettoken(login, passwd));
         if (suser.isError() == true) {
             return true;
-        }
+        }*/
         return false;
     }
 
@@ -141,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                 internetError();
             } else {
                 if (connectNetwork(login, passwd) == false) {
-                    startActivity(new Intent(this, ProfileActivity_.class));
+                    //startActivity(new Intent(this, ProfileActivity_.class));
                 }
             }
         }
