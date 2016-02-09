@@ -89,11 +89,10 @@ public class LoginActivity extends AppCompatActivity {
         LoginRequest lr = new LoginRequest(login, passwd);
         String tokengenerate = generateToken();
         restapi.setCookie("PHPSESSID", tokengenerate);
-        restapi.getToken(lr);
-        SUser suser = new SUser(login, passwd, tokengenerate);
-        if (suser.isError() == true) {
-            return true;
-        }
+        restapi.sendToken(lr);
+        User u = new User(login, passwd, tokengenerate, "true");
+        u.save();
+        // get herokuap api error to know if the token is valid
         return false;
     }
 

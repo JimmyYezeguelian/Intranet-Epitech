@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
 import com.nico_11_riv.intranetepitech.API.herokuapi;
 import com.nico_11_riv.intranetepitech.API.Requests.InfosRequest;
+import com.nico_11_riv.intranetepitech.API.intrapi;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.CircleTransform;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.GInfos;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.SInfos;
@@ -51,6 +52,9 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
     @RestService
     herokuapi API;
+
+    @RestService
+    intrapi api;
 
     @Bean
     APIErrorHandler ErrorHandler;
@@ -171,6 +175,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             InfosRequest ir = new InfosRequest(gUser.getToken());
             Infos.deleteAll(Infos.class, "token = ?", gUser.getToken());
             Messages.deleteAll(Messages.class, "token = ?", gUser.getToken());
+            api.setCookie("PHPSESSID", gUser.getToken());
             SInfos sinfos = new SInfos(API.getInfos(ir), API.getTrombi(gUser.getToken(), gUser.getLogin()));
             SMessages msg = new SMessages(API.getMessages(gUser.getToken()));
         }

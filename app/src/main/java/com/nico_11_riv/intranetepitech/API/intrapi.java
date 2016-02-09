@@ -16,7 +16,11 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 public interface intrapi {
     @Post("/")
     @RequiresCookie("PHPSESSID")
-    String getToken(LoginRequest lr);
+    String sendToken(LoginRequest lr);
+
+    @Post("/user")
+    @RequiresCookie("PHPSESSID")
+    String getuserinfo();
 
     void setCookie(String name, String value);
     String getCookie(String name);
