@@ -131,7 +131,7 @@ public class ModulesAllActivity extends AppCompatActivity implements NavigationV
             Puserinfos infos = new Puserinfos(result);
             api.setCookie("PHPSESSID", gUser.getToken());
             Pallmodules mod = new Pallmodules(api.getallmodules());
-        }""
+        }
         Guserinfos guserinfos = new Guserinfos();
         initMenu();
     }

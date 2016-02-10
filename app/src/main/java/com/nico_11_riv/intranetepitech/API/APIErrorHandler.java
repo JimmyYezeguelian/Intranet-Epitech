@@ -23,7 +23,7 @@ public class APIErrorHandler extends Application implements RestErrorHandler {
 
     @UiThread
     void connexionError() {
-        login_button.setText("Réessayez");
+        //login_button.setText("Réessayez");
     }
 
     @Override

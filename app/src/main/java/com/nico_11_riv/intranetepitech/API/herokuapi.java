@@ -11,10 +11,11 @@ import org.androidannotations.annotations.rest.Get;
 import org.androidannotations.annotations.rest.Post;
 import org.androidannotations.annotations.rest.Rest;
 import org.androidannotations.api.rest.RestClientErrorHandling;
+import org.json.JSONArray;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 
-@Rest(rootUrl = "https://epitech-intrapi.herokuapp.com", converters = {StringHttpMessageConverter.class, FormHttpMessageConverter.class})
+@Rest(rootUrl = "https://epitech-api.herokuapp.com", converters = {StringHttpMessageConverter.class, FormHttpMessageConverter.class})
 public interface herokuapi extends RestClientErrorHandling {
     @Post("/login")
     String getToken(LoginRequest lr);
@@ -45,4 +46,7 @@ public interface herokuapi extends RestClientErrorHandling {
 
     @Delete("/event")
     void unregisterEvent(unRegisterEventRequest rer);
+
+    @Get("/projects?token={token}")
+    String getallprojets(String token);
 }

@@ -5,21 +5,20 @@ import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
 
 public class Planning extends SugarRecord {
     private String token;
-    private String start;
-    private String end;
-    private String eventreg;
-    private String acti_title;
+    private String scolaryear;
     private String codemodule;
-    private String total_students_registered;
+    private String codeinstance;
     private String codeacti;
     private String codeevent;
-    private String codeinstance;
-    private String scolaryear;
     private String semester;
+    private String titlemodule;
+    private String acti_title;
+    private String start;
+    private String end;
+    private String resigtermodule;
+    private String registerevent;
     private String regstudent;
     private String allow_token;
-    private String modulereg;
-    private String titlemodule;
 
     public Planning() {
         GUser gUser = new GUser();
@@ -30,23 +29,6 @@ public class Planning extends SugarRecord {
         this.token = token;
     }
 
-
-    public String getTitlemodule() {
-        return titlemodule;
-    }
-
-    public void setTitlemodule(String titlemodule) {
-        this.titlemodule = titlemodule;
-    }
-
-    public String getActi_title() {
-        return acti_title;
-    }
-
-    public void setActi_title(String acti_title) {
-        this.acti_title = acti_title;
-    }
-
     public String getToken() {
         return token;
     }
@@ -55,28 +37,12 @@ public class Planning extends SugarRecord {
         this.token = token;
     }
 
-    public String getStart() {
-        return start;
+    public String getScolaryear() {
+        return scolaryear;
     }
 
-    public void setStart(String start) {
-        this.start = start;
-    }
-
-    public String getEnd() {
-        return end;
-    }
-
-    public void setEnd(String end) {
-        this.end = end;
-    }
-
-    public String getEventreg() {
-        return eventreg;
-    }
-
-    public void setEventreg(String eventreg) {
-        this.eventreg = eventreg;
+    public void setScolaryear(String scolaryear) {
+        this.scolaryear = scolaryear;
     }
 
     public String getCodemodule() {
@@ -87,12 +53,12 @@ public class Planning extends SugarRecord {
         this.codemodule = codemodule;
     }
 
-    public String getTotal_students_registered() {
-        return total_students_registered;
+    public String getCodeinstance() {
+        return codeinstance;
     }
 
-    public void setTotal_students_registered(String total_students_registered) {
-        this.total_students_registered = total_students_registered;
+    public void setCodeinstance(String codeinstance) {
+        this.codeinstance = codeinstance;
     }
 
     public String getCodeacti() {
@@ -111,22 +77,6 @@ public class Planning extends SugarRecord {
         this.codeevent = codeevent;
     }
 
-    public String getCodeinstance() {
-        return codeinstance;
-    }
-
-    public void setCodeinstance(String codeinstance) {
-        this.codeinstance = codeinstance;
-    }
-
-    public String getScolaryear() {
-        return scolaryear;
-    }
-
-    public void setScolaryear(String scolaryear) {
-        this.scolaryear = scolaryear;
-    }
-
     public String getSemester() {
         return semester;
     }
@@ -135,12 +85,60 @@ public class Planning extends SugarRecord {
         this.semester = semester;
     }
 
-    public String getRegister_student() {
+    public String getTitlemodule() {
+        return titlemodule;
+    }
+
+    public void setTitlemodule(String titlemodule) {
+        this.titlemodule = titlemodule;
+    }
+
+    public String getActi_title() {
+        return acti_title;
+    }
+
+    public void setActi_title(String acti_title) {
+        this.acti_title = acti_title;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
+    }
+
+    public String getResigtermodule() {
+        return resigtermodule;
+    }
+
+    public void setResigtermodule(String resigtermodule) {
+        this.resigtermodule = resigtermodule;
+    }
+
+    public String getRegisterevent() {
+        return registerevent;
+    }
+
+    public void setRegisterevent(String registerevent) {
+        this.registerevent = registerevent;
+    }
+
+    public String getRegstudent() {
         return regstudent;
     }
 
-    public void setRegister_student(String register_student) {
-        this.regstudent = register_student;
+    public void setRegstudent(String regstudent) {
+        this.regstudent = regstudent;
     }
 
     public String getAllow_token() {
@@ -149,13 +147,5 @@ public class Planning extends SugarRecord {
 
     public void setAllow_token(String allow_token) {
         this.allow_token = allow_token;
-    }
-
-    public String getModulereg() {
-        return modulereg;
-    }
-
-    public void setModulereg(String modulereg) {
-        this.modulereg = modulereg;
     }
 }

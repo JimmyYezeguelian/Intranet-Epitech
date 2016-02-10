@@ -14,30 +14,28 @@ import org.json.JSONObject;
 import java.util.Objects;
 
 
-public class SPlanning {
-    public SPlanning(String api) {
+public class Pplanning {
+    public Pplanning(String api) {
         GUser user = new GUser();
         try {
             JSONArray planning = new JSONArray(api);
             for (int i = 0; i < planning.length(); ++i) {
                 JSONObject tmp = planning.getJSONObject(i);
-                if (tmp.has("module_registered")) {
+                if (tmp.has("scolaryear")) {
                     Planning pl = new Planning(user.getToken());
-                    pl.setStart(tmp.getString("start"));
-                    pl.setEnd(tmp.getString("end"));
-                    pl.setEventreg(tmp.getString("event_registered"));
-                    pl.setActi_title(tmp.getString("acti_title"));
+                    pl.setScolaryear(tmp.getString("scolaryear"));
                     pl.setCodemodule(tmp.getString("codemodule"));
-                    pl.setTotal_students_registered(tmp.getString("total_students_registered"));
+                    pl.setCodeinstance(tmp.getString("codeinstance"));
                     pl.setCodeacti(tmp.getString("codeacti"));
                     pl.setCodeevent(tmp.getString("codeevent"));
-                    pl.setCodeinstance(tmp.getString("codeinstance"));
-                    pl.setScolaryear(tmp.getString("scolaryear"));
                     pl.setSemester(tmp.getString("semester"));
-                    pl.setRegister_student(tmp.getString("register_student"));
-                    pl.setAllow_token(tmp.getString("allow_token"));
-                    pl.setModulereg(tmp.getString("module_registered"));
                     pl.setTitlemodule(tmp.getString("titlemodule"));
+                    pl.setActi_title(tmp.getString("acti_title"));
+                    pl.setStart(tmp.getString("start"));
+                    pl.setEnd(tmp.getString("end"));
+                    pl.setResigtermodule(tmp.getString("module_registered"));
+                    pl.setAllow_token(tmp.getString("allow_token"));
+                    pl.setRegisterevent(tmp.getString("event_registered"));
                     pl.save();
                 }
             }

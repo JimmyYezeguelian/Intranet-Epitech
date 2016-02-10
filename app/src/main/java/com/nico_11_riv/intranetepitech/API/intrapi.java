@@ -35,6 +35,10 @@ public interface intrapi {
     @RequiresCookie("PHPSESSID")
     String getallmodules();
 
+    @Get("/planning/load?format=json&start={start}&end={end}")
+    @RequiresCookie("PHPSESSID")
+    String getplanning(String start, String end);
+
     void setCookie(String name, String value);
     String getCookie(String name);
 }

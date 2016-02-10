@@ -18,10 +18,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
-import com.nico_11_riv.intranetepitech.API.herokuapi;
+import com.nico_11_riv.intranetepitech.API.intrapi;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.CircleTransform;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Guserinfos;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Planning.SPlanning;
+import com.nico_11_riv.intranetepitech.Database.GettersSetters.Planning.Pplanning;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
 import com.nico_11_riv.intranetepitech.Database.Planning;
 import com.nico_11_riv.intranetepitech.Database.User;
@@ -52,7 +52,7 @@ public class ScheduleActivity extends AppCompatActivity implements NavigationVie
     private static int week = 0;
 
     @RestService
-    herokuapi API;
+    intrapi api;
 
     @Bean
     APIErrorHandler ErrorHandler;
@@ -73,11 +73,6 @@ public class ScheduleActivity extends AppCompatActivity implements NavigationVie
     TextView week_num;
 
     private GUser gUser = new GUser();
-
-    @AfterInject
-    void afterInject() {
-        API.setRestErrorHandler(ErrorHandler);
-    }
 
     private boolean isConnected() {
         try {
@@ -117,11 +112,10 @@ public class ScheduleActivity extends AppCompatActivity implements NavigationVie
 
     private ArrayList<Schedule_content> generateData() {
         ArrayList<Schedule_content> items = new ArrayList<Schedule_content>();
-        //  List<Planning> pl = Select.from(Planning.class).where(Condition.prop("token").eq(gUser.getToken())).list();
-        List<Planning> pl = Planning.findWithQuery(Planning.class, "Select * from Planning where token = ? and eventreg = ? or eventreg = ?", gUser.getToken(), "registered", "present");
+        List<Planning> pl = Planning.findWithQuery(Planning.class, "Select * from Planning where token = ? and registerevent = ? or registerevent = ?", gUser.getToken(), "registered", "present");
         for (int i = 0; i < pl.size(); i++) {
             Planning info = pl.get(i);
-            items.add(new Schedule_content(info.getTitlemodule().substring(0, 2), info.getActi_title(), info.getStart().substring(0, info.getStart().length() - 3), info.getEnd().split("\\ ")[1].substring(0, 5), info.getScolaryear(), info.getEventreg(), info.getCodemodule(), info.getCodeinstance(), info.getCodeacti(), info.getCodeevent(), info.getAllow_token()));
+            items.add(new Schedule_content(info.getTitlemodule().substring(0, 2), info.getActi_title(), info.getStart().substring(0, info.getStart().length() - 3), info.getEnd().split("\\ ")[1].substring(0, 5), info.getScolaryear(), info.getRegisterevent(), info.getCodemodule(), info.getCodeinstance(), info.getCodeacti(), info.getCodeevent(), info.getAllow_token()));
         }
         prog();
         return items;
@@ -160,7 +154,7 @@ public class ScheduleActivity extends AppCompatActivity implements NavigationVie
 
         if (isConnected() == true) {
             Planning.deleteAll(Planning.class, "token = ?", gUser.getToken());
-            SPlanning pl = new SPlanning(API.getPlanning(gUser.getToken(), startDate, endDate));
+            Pplanning pl = new Pplanning(api.getplanning(startDate, endDate));
         }
         initMenu();
         titi(startDate, endDate);

@@ -19,10 +19,12 @@ import android.widget.TextView;
 import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
 import com.nico_11_riv.intranetepitech.API.herokuapi;
 import com.nico_11_riv.intranetepitech.API.Requests.InfosRequest;
-import com.nico_11_riv.intranetepitech.Database.Current_Projets;
+import com.nico_11_riv.intranetepitech.API.intrapi;
+import com.nico_11_riv.intranetepitech.Database.Allprojects;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.CircleTransform;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Guserinfos;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Puserinfos;
+import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Pallprojects;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
 import com.nico_11_riv.intranetepitech.Database.User;
 import com.nico_11_riv.intranetepitech.Database.Userinfos;
@@ -49,6 +51,9 @@ public class ProjectsActivity extends AppCompatActivity implements NavigationVie
 
     @RestService
     herokuapi API;
+
+    @RestService
+    intrapi api;
 
     @Bean
     APIErrorHandler ErrorHandler;
@@ -92,10 +97,10 @@ public class ProjectsActivity extends AppCompatActivity implements NavigationVie
 
     private ArrayList<Projects_content> generateData() {
         ArrayList<Projects_content> items = new ArrayList<Projects_content>();
-        List<Current_Projets> project = Select.from(Current_Projets.class).where(Condition.prop("token").eq(gUser.getToken())).list();
+        List<Allprojects> project = Select.from(Allprojects.class).where(Condition.prop("token").eq(gUser.getToken())).list();
         for (int i = 0; i < project.size(); i++) {
-            Current_Projets info = project.get(i);
-            items.add(new Projects_content(info.getTitle(), info.getTimeline_start(), info.getTimeline_end()));
+            Allprojects info = project.get(i);
+            items.add(new Projects_content(info.getActititle(), info.getBeginacti(), info.getEndacti()));
         }
         return items;
     }
@@ -128,8 +133,10 @@ public class ProjectsActivity extends AppCompatActivity implements NavigationVie
         if (isConnected() == true) {
             InfosRequest ir = new InfosRequest(gUser.getToken());
             Userinfos.deleteAll(Userinfos.class, "token = ?", gUser.getToken());
-            Current_Projets.deleteAll(Current_Projets.class, "token = ?", gUser.getToken());
-            //Puserinfos sinfos = new Puserinfos(API.getInfos(ir), API.getTrombi(gUser.getToken(), gUser.getLogin()));
+            Allprojects.deleteAll(Allprojects.class, "token = ?", gUser.getToken());
+            String result = api.getuserinfo(gUser.getLogin());
+            Puserinfos infos = new Puserinfos(result);
+            Pallprojects pallprojects = new Pallprojects(API.getallprojets(gUser.getToken()));
         }
         Guserinfos guserinfos = new Guserinfos();
         initMenu();
