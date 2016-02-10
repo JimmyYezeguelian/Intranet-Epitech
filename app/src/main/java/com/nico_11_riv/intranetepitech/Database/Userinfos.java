@@ -2,11 +2,12 @@ package com.nico_11_riv.intranetepitech.Database;
 
 import com.orm.SugarRecord;
 
-public class Trombi extends SugarRecord {
+public class Userinfos extends SugarRecord {
+    private String token;
     private String login;
     private String title;
-    private String firstname;
     private String lastname;
+    private String firstname;
     private String email;
     private String picture;
     private String promo;
@@ -15,9 +16,17 @@ public class Trombi extends SugarRecord {
     private String course_code;
     private String studentyear;
     private String credits;
-    private String average_gpa;
+    private String gpa;
 
-    public Trombi() {
+    public Userinfos() {
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getLogin() {
@@ -36,20 +45,20 @@ public class Trombi extends SugarRecord {
         this.title = title;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
     public String getLastname() {
         return lastname;
     }
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getEmail() {
@@ -116,11 +125,11 @@ public class Trombi extends SugarRecord {
         this.credits = credits;
     }
 
-    public String getAverage_gpa() {
-        return average_gpa;
+    public String getGpa() {
+        return gpa;
     }
 
-    public void setAverage_gpa(String average_gpa) {
-        this.average_gpa = average_gpa;
+    public void setGpa(String gpa) {
+        this.gpa = gpa;
     }
 }

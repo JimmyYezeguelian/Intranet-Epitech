@@ -20,13 +20,13 @@ import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
 import com.nico_11_riv.intranetepitech.API.herokuapi;
 import com.nico_11_riv.intranetepitech.API.Requests.InfosRequest;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.CircleTransform;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.GInfos;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.SInfos;
+import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Guserinfos;
+import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Puserinfos;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Marks.SMarks;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
-import com.nico_11_riv.intranetepitech.Database.Infos;
 import com.nico_11_riv.intranetepitech.Database.Marks;
 import com.nico_11_riv.intranetepitech.Database.User;
+import com.nico_11_riv.intranetepitech.Database.Userinfos;
 import com.nico_11_riv.intranetepitech.UI.Adapters.MarksAdapter;
 import com.nico_11_riv.intranetepitech.UI.Contents.Mark_content;
 import com.orm.query.Condition;
@@ -111,12 +111,12 @@ public class MarksActivity extends AppCompatActivity implements NavigationView.O
     }
 
     @UiThread
-    void dispImg(GInfos user_info) {
+    void dispImg(Guserinfos user_info) {
         Picasso.with(getApplicationContext()).load(user_info.getPicture()).transform(new CircleTransform()).into((ImageView) findViewById(R.id.user_img));
     }
 
     void initMenu() {
-        GInfos user_info = new GInfos();
+        Guserinfos user_info = new Guserinfos();
         GUser user = new GUser();
         View header = LayoutInflater.from(this).inflate(R.layout.nav_header, null);
         addHeader(header);
@@ -132,10 +132,10 @@ public class MarksActivity extends AppCompatActivity implements NavigationView.O
     void loadInfos() {
         if (isConnected() == true) {
             InfosRequest ir = new InfosRequest(gUser.getToken());
-            Infos.deleteAll(Infos.class, "token = ?", gUser.getToken());
+            Userinfos.deleteAll(Userinfos.class, "token = ?", gUser.getToken());
             Marks.deleteAll(Marks.class, "token = ?", gUser.getToken());
             SMarks marks = new SMarks(API.getNotes(gUser.getToken()));
-            SInfos sinfos = new SInfos(API.getInfos(ir), API.getTrombi(gUser.getToken(), gUser.getLogin()));
+            //Puserinfos sinfos = new Puserinfos(API.getInfos(ir), API.getTrombi(gUser.getToken(), gUser.getLogin()));
         }
         initMenu();
     }

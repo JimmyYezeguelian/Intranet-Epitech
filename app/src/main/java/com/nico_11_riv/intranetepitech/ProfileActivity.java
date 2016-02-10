@@ -22,13 +22,13 @@ import com.nico_11_riv.intranetepitech.API.herokuapi;
 import com.nico_11_riv.intranetepitech.API.Requests.InfosRequest;
 import com.nico_11_riv.intranetepitech.API.intrapi;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.CircleTransform;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.GInfos;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.SInfos;
+import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Guserinfos;
+import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Puserinfos;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Messages.SMessages;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
-import com.nico_11_riv.intranetepitech.Database.Infos;
 import com.nico_11_riv.intranetepitech.Database.Messages;
 import com.nico_11_riv.intranetepitech.Database.User;
+import com.nico_11_riv.intranetepitech.Database.Userinfos;
 import com.nico_11_riv.intranetepitech.UI.Adapters.MessagesAdapter;
 import com.nico_11_riv.intranetepitech.UI.Contents.Messages_content;
 import com.orm.query.Condition;
@@ -49,9 +49,6 @@ import java.util.List;
 
 @EActivity(R.layout.activity_profile)
 public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    @RestService
-    herokuapi API;
 
     @RestService
     intrapi api;
@@ -100,10 +97,6 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
     private GUser gUser = null;
 
-    @AfterInject
-    void afterInject() {
-        API.setRestErrorHandler(ErrorHandler);
-    }
 
     private boolean isConnected() {
         try {
@@ -143,21 +136,21 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
     }
 
     @UiThread
-    void dispImgsAndHeader(GInfos user_info) {
+    void dispImgsAndHeader(Guserinfos user_info) {
         Picasso.with(getApplicationContext()).load(user_info.getPicture()).transform(new CircleTransform()).into((ImageView) findViewById(R.id.user_img));
         Picasso.with(getApplicationContext()).load(user_info.getPicture()).transform(new CircleTransform()).into((ImageView) findViewById(R.id.header_imageview_dashboard));
         title_user.setText(gUser.getLogin());
         email_user.setText(user_info.getEmail());
         student_year.setText(user_info.getPromo());
         student_semester.setText(user_info.getSemester());
-        objectif_credit.setText(user_info.getCredits_obj());
-        current_netsoul.setText(user_info.getActive_log());
+        //objectif_credit.setText(user_info.getCredits_obj());
+        //current_netsoul.setText(user_info.getActive_log());
         gpa.setText(user_info.getGpa());
         current_credits.setText(user_info.getCredits());
     }
 
     void initMenu() {
-        GInfos user_info = new GInfos();
+        Guserinfos user_info = new Guserinfos();
         View header = LayoutInflater.from(this).inflate(R.layout.nav_header, null);
         dispHeader(header);
         TextView name = (TextView) header.findViewById(R.id.user_name);
@@ -173,11 +166,12 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         gUser = new GUser();
         if (isConnected() == true) {
             InfosRequest ir = new InfosRequest(gUser.getToken());
-            Infos.deleteAll(Infos.class, "token = ?", gUser.getToken());
+            Userinfos.deleteAll(Userinfos.class, "token = ?", gUser.getToken());
             Messages.deleteAll(Messages.class, "token = ?", gUser.getToken());
             api.setCookie("PHPSESSID", gUser.getToken());
-            SInfos sinfos = new SInfos(API.getInfos(ir), API.getTrombi(gUser.getToken(), gUser.getLogin()));
-            SMessages msg = new SMessages(API.getMessages(gUser.getToken()));
+            String result = api.getuserinfo(gUser.getLogin());
+            Puserinfos infos = new Puserinfos(result);
+            //SMessages msg = new SMessages(API.getMessages(gUser.getToken()));
         }
         initMenu();
     }

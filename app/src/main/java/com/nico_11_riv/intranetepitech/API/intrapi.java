@@ -2,6 +2,7 @@ package com.nico_11_riv.intranetepitech.API;
 
 import com.nico_11_riv.intranetepitech.API.Requests.LoginRequest;
 
+import org.androidannotations.annotations.rest.Get;
 import org.androidannotations.annotations.rest.Post;
 import org.androidannotations.annotations.rest.RequiresCookie;
 import org.androidannotations.annotations.rest.Rest;
@@ -18,9 +19,9 @@ public interface intrapi {
     @RequiresCookie("PHPSESSID")
     String sendToken(LoginRequest lr);
 
-    @Post("/user")
+    @Get("/user/{login}/?format=json")
     @RequiresCookie("PHPSESSID")
-    String getuserinfo();
+    String getuserinfo(String login);
 
     void setCookie(String name, String value);
     String getCookie(String name);

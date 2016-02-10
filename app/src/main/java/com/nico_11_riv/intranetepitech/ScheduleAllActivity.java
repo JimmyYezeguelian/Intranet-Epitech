@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
 import com.nico_11_riv.intranetepitech.API.herokuapi;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.CircleTransform;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.GInfos;
+import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Guserinfos;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Planning.SPlanning;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
 import com.nico_11_riv.intranetepitech.Database.Planning;
@@ -94,12 +94,12 @@ public class ScheduleAllActivity extends AppCompatActivity implements Navigation
     }
 
     @UiThread
-    void sImg(GInfos user_info) {
+    void sImg(Guserinfos user_info) {
         Picasso.with(getApplicationContext()).load(user_info.getPicture()).transform(new CircleTransform()).into((ImageView) findViewById(R.id.user_img));
     }
 
     void initMenu() {
-        GInfos user_info = new GInfos();
+        Guserinfos user_info = new Guserinfos();
         GUser user = new GUser();
         View header = LayoutInflater.from(this).inflate(R.layout.nav_header, null);
         sHeader(header);

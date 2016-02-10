@@ -17,7 +17,7 @@ import com.nico_11_riv.intranetepitech.API.herokuapi;
 import com.nico_11_riv.intranetepitech.API.Requests.RegisterEventRequest;
 import com.nico_11_riv.intranetepitech.API.Requests.TokenRequest;
 import com.nico_11_riv.intranetepitech.API.Requests.unRegisterEventRequest;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.GInfos;
+import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Guserinfos;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
 import com.nico_11_riv.intranetepitech.Database.Planning;
 import com.nico_11_riv.intranetepitech.UI.Contents.Schedule_content;
@@ -44,7 +44,7 @@ public class ListScheduleFragment extends Fragment implements AdapterView.OnItem
     ListView schedulelistview;
     private ArrayList<Schedule_content> mMarkItemList = null;
     private GUser gUser = new GUser();
-    private GInfos gInfos = null;
+    private Guserinfos guserinfos = null;
 
     @AfterViews
     void init() {
@@ -72,10 +72,10 @@ public class ListScheduleFragment extends Fragment implements AdapterView.OnItem
 
     @Background
     void sendToken(Schedule_content toto, CharSequence input) {
-        gInfos = new GInfos();
+        guserinfos = new Guserinfos();
         if (isConnected() == true) {
             Planning.deleteAll(Planning.class, "token = ?", gUser.getToken());
-            TokenRequest tt = new TokenRequest(gUser.getToken(), gInfos.getPromo(), toto.getCodemodule(), toto.getCodeinstance(), toto.getCodeacti(), toto.getCodeevent(), input.toString());
+            TokenRequest tt = new TokenRequest(gUser.getToken(), guserinfos.getPromo(), toto.getCodemodule(), toto.getCodeinstance(), toto.getCodeacti(), toto.getCodeevent(), input.toString());
             API.validateToken(tt);
         } else {
             toastt();
@@ -101,7 +101,7 @@ public class ListScheduleFragment extends Fragment implements AdapterView.OnItem
 
     @Background
     void register(final Schedule_content item) {
-        gInfos = new GInfos();
+        guserinfos = new Guserinfos();
         if (isConnected() == true) {
             RegisterEventRequest rer = new RegisterEventRequest(gUser.getToken(), item.getScolaryear(), item.getCodemodule(), item.getCodeinstance(), item.getCodeacti(), item.getCodeevent());
             API.registerEvent(rer);
@@ -112,7 +112,7 @@ public class ListScheduleFragment extends Fragment implements AdapterView.OnItem
 
     @Background
     void unregister(final Schedule_content item) {
-        gInfos = new GInfos();
+        guserinfos = new Guserinfos();
         if (isConnected() == true) {
             unRegisterEventRequest rer = new unRegisterEventRequest(gUser.getToken(), item.getScolaryear(), item.getCodemodule(), item.getCodeinstance(), item.getCodeacti(), item.getCodeevent());
             API.unregisterEvent(rer);
