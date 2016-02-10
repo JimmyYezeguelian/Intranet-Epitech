@@ -154,6 +154,7 @@ public class ScheduleModulesActivity extends AppCompatActivity implements Naviga
 
         if (isConnected() == true) {
             Planning.deleteAll(Planning.class, "token = ?", gUser.getToken());
+            api.setCookie("PHPSESSID", gUser.getToken());
             Pplanning pl = new Pplanning(api.getplanning(startDate, endDate));
         }
         initMenu();
