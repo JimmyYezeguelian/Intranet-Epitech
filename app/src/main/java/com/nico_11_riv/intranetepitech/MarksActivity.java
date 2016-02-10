@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
 import com.nico_11_riv.intranetepitech.API.herokuapi;
 import com.nico_11_riv.intranetepitech.API.Requests.InfosRequest;
+import com.nico_11_riv.intranetepitech.API.intrapi;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.CircleTransform;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Guserinfos;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Puserinfos;
@@ -49,7 +50,7 @@ import java.util.List;
 public class MarksActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @RestService
-    herokuapi API;
+    intrapi api;
 
     @Bean
     APIErrorHandler ErrorHandler;
@@ -63,13 +64,8 @@ public class MarksActivity extends AppCompatActivity implements NavigationView.O
     @ViewById
     NavigationView nav_view;
 
-
     private GUser gUser = new GUser();
 
-    @AfterInject
-    void afterInject() {
-        API.setRestErrorHandler(ErrorHandler);
-    }
 
     private boolean isConnected() {
         try {
@@ -134,8 +130,9 @@ public class MarksActivity extends AppCompatActivity implements NavigationView.O
             InfosRequest ir = new InfosRequest(gUser.getToken());
             Userinfos.deleteAll(Userinfos.class, "token = ?", gUser.getToken());
             Marks.deleteAll(Marks.class, "token = ?", gUser.getToken());
-            SMarks marks = new SMarks(API.getNotes(gUser.getToken()));
-            //Puserinfos sinfos = new Puserinfos(API.getInfos(ir), API.getTrombi(gUser.getToken(), gUser.getLogin()));
+            SMarks marks = new SMarks(api.getmarks(gUser.getLogin()));
+            String result = api.getuserinfo(gUser.getLogin());
+            Puserinfos infos = new Puserinfos(result);
         }
         initMenu();
     }

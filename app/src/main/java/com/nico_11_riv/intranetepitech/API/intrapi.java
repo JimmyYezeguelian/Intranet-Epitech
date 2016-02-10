@@ -23,6 +23,18 @@ public interface intrapi {
     @RequiresCookie("PHPSESSID")
     String getuserinfo(String login);
 
+    @Get("/user/notification/message?format=json")
+    @RequiresCookie("PHPSESSID")
+    String getnotifs();
+
+    @Get("/user/{login}/notes?format=json")
+    @RequiresCookie("PHPSESSID")
+    String getmarks(String login);
+
+    @Get("/course/filter?format=json")
+    @RequiresCookie("PHPSESSID")
+    String getallmodules();
+
     void setCookie(String name, String value);
     String getCookie(String name);
 }

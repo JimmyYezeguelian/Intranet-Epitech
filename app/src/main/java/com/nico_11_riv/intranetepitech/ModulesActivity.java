@@ -17,21 +17,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
-import com.nico_11_riv.intranetepitech.API.herokuapi;
 import com.nico_11_riv.intranetepitech.API.Requests.InfosRequest;
+import com.nico_11_riv.intranetepitech.API.intrapi;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.CircleTransform;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Guserinfos;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Puserinfos;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Modules.SModules;
+import com.nico_11_riv.intranetepitech.Database.GettersSetters.Modules.Pmodules;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
 import com.nico_11_riv.intranetepitech.Database.Modules;
 import com.nico_11_riv.intranetepitech.Database.User;
 import com.nico_11_riv.intranetepitech.Database.Userinfos;
 import com.nico_11_riv.intranetepitech.UI.Adapters.ModulesAdapter;
 import com.nico_11_riv.intranetepitech.UI.Contents.Modules_content;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 import com.squareup.picasso.Picasso;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
@@ -47,7 +48,7 @@ import java.util.List;
 public class ModulesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @RestService
-    herokuapi API;
+    intrapi api;
 
     @Bean
     APIErrorHandler ErrorHandler;
@@ -62,11 +63,6 @@ public class ModulesActivity extends AppCompatActivity implements NavigationView
     NavigationView nav_view;
 
     private GUser gUser = new GUser();
-
-    @AfterInject
-    void afterInject() {
-        API.setRestErrorHandler(ErrorHandler);
-    }
 
     private boolean isConnected() {
         try {
@@ -92,10 +88,10 @@ public class ModulesActivity extends AppCompatActivity implements NavigationView
     private ArrayList<Modules_content> generateData() {
         ArrayList<Modules_content> items = new ArrayList<Modules_content>();
 
-        List<Modules> modules = Modules.findWithQuery(Modules.class, "Select * from Modules where title Like \"B%\" order by title");
+        List<Modules> modules = Select.from(Modules.class).where(Condition.prop("token").eq(gUser.getToken())).orderBy("title").list();
         for (int i = modules.size() - 1; i > 0; i--) {
             Modules info = modules.get(i);
-            items.add(new Modules_content(info.getGrade(), info.getTitle(), info.getDate_ins(), info.getCodemodule()));
+            items.add(new Modules_content(info.getGrade(), info.getTitle(), info.getDateins(), info.getCodemodule()));
         }
         return items;
     }
@@ -129,8 +125,9 @@ public class ModulesActivity extends AppCompatActivity implements NavigationView
             InfosRequest ir = new InfosRequest(gUser.getToken());
             Userinfos.deleteAll(Userinfos.class, "token = ?", gUser.getToken());
             Modules.deleteAll(Modules.class, "token = ?", gUser.getToken());
-            //Puserinfos sinfos = new Puserinfos(API.getInfos(ir), API.getTrombi(gUser.getToken(), gUser.getLogin()));
-            //SModules mod = new SModules(API.getModules(gUser.getToken()));
+            String result = api.getuserinfo(gUser.getLogin());
+            Puserinfos infos = new Puserinfos(result);
+            Pmodules mod = new Pmodules(api.getmarks(gUser.getLogin()));
         }
         Guserinfos guserinfos = new Guserinfos();
         initMenu();

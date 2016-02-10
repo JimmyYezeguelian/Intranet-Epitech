@@ -18,13 +18,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
-import com.nico_11_riv.intranetepitech.API.herokuapi;
 import com.nico_11_riv.intranetepitech.API.Requests.InfosRequest;
 import com.nico_11_riv.intranetepitech.API.intrapi;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.CircleTransform;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Guserinfos;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Puserinfos;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Messages.SMessages;
+import com.nico_11_riv.intranetepitech.Database.GettersSetters.Messages.Pmessages;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
 import com.nico_11_riv.intranetepitech.Database.Messages;
 import com.nico_11_riv.intranetepitech.Database.User;
@@ -35,7 +34,6 @@ import com.orm.query.Condition;
 import com.orm.query.Select;
 import com.squareup.picasso.Picasso;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
@@ -171,7 +169,8 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             api.setCookie("PHPSESSID", gUser.getToken());
             String result = api.getuserinfo(gUser.getLogin());
             Puserinfos infos = new Puserinfos(result);
-            //SMessages msg = new SMessages(API.getMessages(gUser.getToken()));
+            api.setCookie("PHPSESSID", gUser.getToken());
+            Pmessages msg = new Pmessages(api.getnotifs());
         }
         initMenu();
     }
