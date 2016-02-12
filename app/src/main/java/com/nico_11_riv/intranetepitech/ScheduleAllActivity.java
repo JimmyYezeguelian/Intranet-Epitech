@@ -66,12 +66,6 @@ public class ScheduleAllActivity extends AppCompatActivity implements Navigation
     @ViewById
     NavigationView nav_view;
 
-    @ViewById
-    ProgressBar planning_progress;
-
-    @ViewById
-    TextView week_num;
-
     private GUser gUser = new GUser();
 
     private boolean isConnected() {
@@ -105,11 +99,6 @@ public class ScheduleAllActivity extends AppCompatActivity implements Navigation
         sImg(user_info);
     }
 
-    @UiThread
-    void prog() {
-        planning_progress.setVisibility(nav_view.INVISIBLE);
-    }
-
     private ArrayList<Schedule_content> generateData() {
         ArrayList<Schedule_content> items = new ArrayList<Schedule_content>();
         List<Planning> pl = Planning.findWithQuery(Planning.class, "Select * from Planning where token = ? ", gUser.getToken());
@@ -117,13 +106,7 @@ public class ScheduleAllActivity extends AppCompatActivity implements Navigation
             Planning info = pl.get(i);
             items.add(new Schedule_content(info.getTitlemodule().substring(0, 2), info.getActi_title(), info.getStart().substring(0, info.getStart().length() - 3), info.getEnd().split("\\ ")[1].substring(0, 5), info.getScolaryear(), info.getRegisterevent(), info.getCodemodule(), info.getCodeinstance(), info.getCodeacti(), info.getCodeevent(), info.getAllow_token()));
         }
-        prog();
         return items;
-    }
-
-    @UiThread
-    void dispWeek(String s, String e) {
-        week_num.setText("Du " + s + " au " + e);
     }
 
     @UiThread
@@ -132,7 +115,6 @@ public class ScheduleAllActivity extends AppCompatActivity implements Navigation
     }
 
     void titi(String s, String e) {
-        dispWeek(s, e);
         ScheduleAdpater adapter = new ScheduleAdpater(this, generateData());
 
         ListView listView = (ListView) findViewById(R.id.schedulelistview);
@@ -217,19 +199,5 @@ public class ScheduleAllActivity extends AppCompatActivity implements Navigation
             startActivity(new Intent(this, LoginActivity_.class));
         }
         return true;
-    }
-
-    @Click(R.id.prev_week)
-    void PrevClicked() {
-        week -= 1;
-        Planning.deleteAll(Planning.class, "token = ?", gUser.getToken());
-        startActivity(new Intent(this, ScheduleAllActivity_.class));
-    }
-
-    @Click(R.id.next_week)
-    void NextClicked() {
-        week += 1;
-        Planning.deleteAll(Planning.class, "token = ?", gUser.getToken());
-        startActivity(new Intent(this, ScheduleAllActivity_.class));
     }
 }

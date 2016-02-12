@@ -17,6 +17,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.alamkanak.weekview.MonthLoader;
+import com.alamkanak.weekview.WeekView;
+import com.alamkanak.weekview.WeekViewEvent;
 import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
 import com.nico_11_riv.intranetepitech.API.intrapi;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.CircleTransform;
@@ -47,7 +50,7 @@ import java.util.List;
 import java.util.Locale;
 
 @EActivity(R.layout.activity_schedule)
-public class ScheduleModulesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ScheduleModulesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, WeekView.MonthChangeListener {
 
     private static int week = 0;
 
@@ -65,12 +68,6 @@ public class ScheduleModulesActivity extends AppCompatActivity implements Naviga
 
     @ViewById
     NavigationView nav_view;
-
-    @ViewById
-    ProgressBar planning_progress;
-
-    @ViewById
-    TextView week_num;
 
     private GUser gUser = new GUser();
 
@@ -103,11 +100,27 @@ public class ScheduleModulesActivity extends AppCompatActivity implements Naviga
         TextView email = (TextView) header.findViewById(R.id.user_email);
         email.setText(user_info.getEmail());
         sImg(user_info);
-    }
 
-    @UiThread
-    void prog() {
-        planning_progress.setVisibility(nav_view.INVISIBLE);
+        WeekView mWeekView = (WeekView) findViewById(R.id.weekView);
+
+
+
+// Set an action when any event is clicked.
+        mWeekView.setOnEventClickListener(mEventClickListener);
+
+// The week view has infinite scrolling horizontally. We have to provide the events of a
+// month every time the month changes on the week view.
+        mWeekView.setMonthChangeListener(new MonthLoader.MonthChangeListener() {
+            @Override
+            public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
+                return getEvents(newYear, newMonth);
+            }
+        });
+
+// Set long press listener for events.
+        mWeekView.setEventLongPressListener(mEventLongPressListener);
+
+
     }
 
     private ArrayList<Schedule_content> generateData() {
@@ -117,13 +130,7 @@ public class ScheduleModulesActivity extends AppCompatActivity implements Naviga
             Planning info = pl.get(i);
             items.add(new Schedule_content(info.getTitlemodule().substring(0, 2), info.getActi_title(), info.getStart().substring(0, info.getStart().length() - 3), info.getEnd().split("\\ ")[1].substring(0, 5), info.getScolaryear(), info.getRegisterevent(), info.getCodemodule(), info.getCodeinstance(), info.getCodeacti(), info.getCodeevent(), info.getAllow_token()));
         }
-        prog();
         return items;
-    }
-
-    @UiThread
-    void dispWeek(String s, String e) {
-        week_num.setText("Du " + s + " au " + e);
     }
 
     @UiThread
@@ -132,7 +139,6 @@ public class ScheduleModulesActivity extends AppCompatActivity implements Naviga
     }
 
     void titi(String s, String e) {
-        dispWeek(s, e);
         ScheduleAdpater adapter = new ScheduleAdpater(this, generateData());
 
         ListView listView = (ListView) findViewById(R.id.schedulelistview);
@@ -216,19 +222,5 @@ public class ScheduleModulesActivity extends AppCompatActivity implements Naviga
             startActivity(new Intent(this, LoginActivity_.class));
         }
         return true;
-    }
-
-    @Click(R.id.prev_week)
-    void PrevClicked() {
-        week -= 1;
-        Planning.deleteAll(Planning.class, "token = ?", gUser.getToken());
-        startActivity(new Intent(this, ScheduleModulesActivity_.class));
-    }
-
-    @Click(R.id.next_week)
-    void NextClicked() {
-        week += 1;
-        Planning.deleteAll(Planning.class, "token = ?", gUser.getToken());
-        startActivity(new Intent(this, ScheduleModulesActivity_.class));
     }
 }
