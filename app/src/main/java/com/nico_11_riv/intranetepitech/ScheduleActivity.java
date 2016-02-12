@@ -114,13 +114,6 @@ public class ScheduleActivity extends AppCompatActivity implements NavigationVie
         listView.setAdapter(adapter);
     }
 
-    void titi(String s, String e) {
-        ScheduleAdpater adapter = new ScheduleAdpater(this, generateData());
-
-        ListView listView = (ListView) findViewById(R.id.schedulelistview);
-        sAdpater(listView, adapter);
-    }
-
     @Background
     void loadInfos() {
         Calendar c = GregorianCalendar.getInstance(Locale.FRANCE);
@@ -140,7 +133,6 @@ public class ScheduleActivity extends AppCompatActivity implements NavigationVie
             Pplanning pl = new Pplanning(api.getplanning(startDate, endDate));
         }
         initMenu();
-        titi(startDate, endDate);
     }
 
     @AfterViews

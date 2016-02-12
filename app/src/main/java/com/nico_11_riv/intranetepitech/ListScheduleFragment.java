@@ -3,26 +3,17 @@ package com.nico_11_riv.intranetepitech;
 import android.app.Fragment;
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.support.annotation.NonNull;
-import android.text.InputType;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.alamkanak.weekview.MonthLoader;
+import com.alamkanak.weekview.WeekView;
+import com.alamkanak.weekview.WeekViewEvent;
 import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
-import com.nico_11_riv.intranetepitech.API.herokuapi;
-import com.nico_11_riv.intranetepitech.API.Requests.RegisterEventRequest;
-import com.nico_11_riv.intranetepitech.API.Requests.TokenRequest;
-import com.nico_11_riv.intranetepitech.API.Requests.unRegisterEventRequest;
+import com.nico_11_riv.intranetepitech.API.intrapi;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Guserinfos;
+import com.nico_11_riv.intranetepitech.Database.GettersSetters.Planning.Pplanning;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
 import com.nico_11_riv.intranetepitech.Database.Planning;
-import com.nico_11_riv.intranetepitech.UI.Contents.Schedule_content;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
@@ -31,30 +22,26 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Locale;
 
 @EFragment(R.layout.listschedule)
-public class ListScheduleFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class ListScheduleFragment extends Fragment implements MonthLoader.MonthChangeListener {
+
+    private static int week = 1;
     @RestService
-    herokuapi API;
+    intrapi api;
     @Bean
     APIErrorHandler ErrorHandler;
     @ViewById
-    ListView schedulelistview;
-    private ArrayList<Schedule_content> mMarkItemList = null;
+    WeekView weekView;
     private GUser gUser = new GUser();
     private Guserinfos guserinfos = null;
-
-    @AfterViews
-    void init() {
-        schedulelistview.setOnItemClickListener(this);
-    }
-
-    @AfterInject
-    void afterInject() {
-        API.setRestErrorHandler(ErrorHandler);
-    }
 
     private boolean isConnected() {
         try {
@@ -66,107 +53,80 @@ public class ListScheduleFragment extends Fragment implements AdapterView.OnItem
     }
 
     @UiThread
-    void toastt() {
-        Toast.makeText(getActivity().getApplicationContext(), "Connexion Internet Requise", Toast.LENGTH_LONG).show();
+    void titi() {
+        weekView.notifyDatasetChanged();
     }
 
     @Background
-    void sendToken(Schedule_content toto, CharSequence input) {
-        guserinfos = new Guserinfos();
+    void toto() {
+        Calendar c = GregorianCalendar.getInstance(Locale.FRANCE);
+        c.add(Calendar.DATE, 7 * week);
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE);
+
+        String startDate = df.format(c.getTime());
+        c.add(Calendar.DATE, 6);
+        String endDate = df.format(c.getTime());
+        api.setCookie("PHPSESSID", gUser.getToken());
+        Pplanning pl = new Pplanning(api.getplanning(startDate, endDate));
+        titi();
+    }
+
+    @AfterViews
+    void init() {
         if (isConnected() == true) {
             Planning.deleteAll(Planning.class, "token = ?", gUser.getToken());
-            TokenRequest tt = new TokenRequest(gUser.getToken(), guserinfos.getPromo(), toto.getCodemodule(), toto.getCodeinstance(), toto.getCodeacti(), toto.getCodeevent(), input.toString());
-            API.validateToken(tt);
-        } else {
-            toastt();
+            toto();
         }
+        weekView.setMonthChangeListener(this);
     }
 
-    @UiThread
-    void disPopUp(final Schedule_content item) {
-        new MaterialDialog.Builder(getActivity())
-                .title("Token")
-                .inputType(InputType.TYPE_CLASS_TEXT)
-                .input("Entrez Token", "", new MaterialDialog.InputCallback() {
-                    @Override
-                    public void onInput(MaterialDialog dialog, CharSequence input) {
-                        sendToken(item, input);
-                        Toast.makeText(getActivity().getApplicationContext(), "Token validé", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .positiveText("Envoyer")
-                .negativeText("Annuler")
-                .show();
-    }
-
-    @Background
-    void register(final Schedule_content item) {
-        guserinfos = new Guserinfos();
-        if (isConnected() == true) {
-            RegisterEventRequest rer = new RegisterEventRequest(gUser.getToken(), item.getScolaryear(), item.getCodemodule(), item.getCodeinstance(), item.getCodeacti(), item.getCodeevent());
-            API.registerEvent(rer);
-        } else {
-            toastt();
-        }
-    }
-
-    @Background
-    void unregister(final Schedule_content item) {
-        guserinfos = new Guserinfos();
-        if (isConnected() == true) {
-            unRegisterEventRequest rer = new unRegisterEventRequest(gUser.getToken(), item.getScolaryear(), item.getCodemodule(), item.getCodeinstance(), item.getCodeacti(), item.getCodeevent());
-            API.unregisterEvent(rer);
-        } else {
-            toastt();
-        }
-    }
-
-    @UiThread
-    void disRegister(final Schedule_content item) {
-        new MaterialDialog.Builder(getActivity())
-                .title("S'inscrire à l'event")
-                .positiveText("S'inscrire")
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        register(item);
-                        Toast.makeText(getActivity().getApplicationContext(), "Inscription réussie", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .negativeText("Annuler")
-                .show();
-    }
-
-    @UiThread
-    void disunRegister(final Schedule_content item) {
-        new MaterialDialog.Builder(getActivity())
-                .title("Se désinscrire de l'event")
-                .positiveText("Se désinscrire")
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        unregister(item);
-                        Toast.makeText(getActivity().getApplicationContext(), "Désinscription réussie", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .negativeText("Annuler")
-                .show();
-    }
-
-    @Background
-    void popUp(AdapterView<?> parent, int position) {
-        final Schedule_content item = (Schedule_content) parent.getItemAtPosition(position);
-        // Si on est registered ou pas
-        if (Objects.equals(item.getAllow_token(), "true")) {
-            disPopUp(item);
-        }
-        else if (Objects.equals(item.getEventreg(), "false")) {
-            disRegister(item);
-        }
+    private boolean eventMatches(WeekViewEvent event, int year, int month) {
+        return (event.getStartTime().get(Calendar.YEAR) == year && event.getStartTime().get(Calendar.MONTH) == month - 1) || (event.getEndTime().get(Calendar.YEAR) == year && event.getEndTime().get(Calendar.MONTH) == month - 1);
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        popUp(parent, position);
+    public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
+        Calendar startTime = null;
+        List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+
+        List<Planning> pl = Planning.findWithQuery(Planning.class, "Select * from Planning where token = ? and registerevent = ? or registerevent = ?", gUser.getToken(), "registered", "present");
+        for (int i = 0; i < pl.size(); i++) {
+            Planning info = pl.get(i);
+            startTime = Calendar.getInstance();
+            startTime.set(Calendar.HOUR_OF_DAY, 3);
+            startTime.set(Calendar.MINUTE, 0);
+            startTime.set(Calendar.MONTH, newMonth - 1);
+            startTime.set(Calendar.YEAR, newYear);
+            Calendar endTime = (Calendar) startTime.clone();
+            endTime.add(Calendar.HOUR, 1);
+            endTime.set(Calendar.MONTH, newMonth - 1);
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE);
+            try {
+                cal.setTime(df.parse(info.getStart()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Calendar cale = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE);
+            try {
+                cale.setTime(sdf.parse(info.getEnd()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            WeekViewEvent event = new WeekViewEvent(1, info.getActi_title(), cal, cale);
+            // event.setColor(getResources().getColor(R.color.event_color_01));
+            events.add(event);
+        }
+        List<WeekViewEvent> matchedEvents = new ArrayList<WeekViewEvent>();
+        for (WeekViewEvent event : events) {
+            if (eventMatches(event, newYear, newMonth)) {
+                matchedEvents.add(event);
+            }
+        }
+        return matchedEvents;
     }
 }

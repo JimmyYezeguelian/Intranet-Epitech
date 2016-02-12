@@ -17,9 +17,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.alamkanak.weekview.MonthLoader;
-import com.alamkanak.weekview.WeekView;
-import com.alamkanak.weekview.WeekViewEvent;
 import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
 import com.nico_11_riv.intranetepitech.API.intrapi;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.CircleTransform;
@@ -50,7 +47,7 @@ import java.util.List;
 import java.util.Locale;
 
 @EActivity(R.layout.activity_schedule)
-public class ScheduleModulesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, WeekView.MonthChangeListener {
+public class ScheduleModulesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static int week = 0;
 
@@ -100,27 +97,6 @@ public class ScheduleModulesActivity extends AppCompatActivity implements Naviga
         TextView email = (TextView) header.findViewById(R.id.user_email);
         email.setText(user_info.getEmail());
         sImg(user_info);
-
-        WeekView mWeekView = (WeekView) findViewById(R.id.weekView);
-
-
-
-// Set an action when any event is clicked.
-        mWeekView.setOnEventClickListener(mEventClickListener);
-
-// The week view has infinite scrolling horizontally. We have to provide the events of a
-// month every time the month changes on the week view.
-        mWeekView.setMonthChangeListener(new MonthLoader.MonthChangeListener() {
-            @Override
-            public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-                return getEvents(newYear, newMonth);
-            }
-        });
-
-// Set long press listener for events.
-        mWeekView.setEventLongPressListener(mEventLongPressListener);
-
-
     }
 
     private ArrayList<Schedule_content> generateData() {
@@ -136,13 +112,6 @@ public class ScheduleModulesActivity extends AppCompatActivity implements Naviga
     @UiThread
     void sAdpater(ListView listView, ScheduleAdpater adapter) {
         listView.setAdapter(adapter);
-    }
-
-    void titi(String s, String e) {
-        ScheduleAdpater adapter = new ScheduleAdpater(this, generateData());
-
-        ListView listView = (ListView) findViewById(R.id.schedulelistview);
-        sAdpater(listView, adapter);
     }
 
     @Background
@@ -164,7 +133,6 @@ public class ScheduleModulesActivity extends AppCompatActivity implements Naviga
             Pplanning pl = new Pplanning(api.getplanning(startDate, endDate));
         }
         initMenu();
-        titi(startDate, endDate);
     }
 
     @AfterViews
