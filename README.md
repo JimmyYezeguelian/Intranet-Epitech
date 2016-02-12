@@ -12,9 +12,9 @@ Ils peuvent ainsi consulter :
  
 
 ##### Le projet
-> Cette application est un projet à réaliser en 3ème année par groupe de 2/3 personnes. 
-> Elle est ainsi codée en JAVA sous Android Studio utilisant Graddle.
-> Nous récupérons les données de cet intranet grâce à une API (une autre api que celle inscrite sur le sujet).
+ Cette application est un projet à réaliser en 3ème année par groupe de 2/3 personnes. 
+ Elle est ainsi codée en JAVA sous Android Studio utilisant Graddle.
+ Nous récupérons les données de cet intranet grâce à une API (une autre api que celle inscrite sur le sujet).
 
 
 ##### Contact
