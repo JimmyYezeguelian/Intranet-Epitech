@@ -1,16 +1,10 @@
-*-----------------------*
-*                       *
-*   Intranet Epitech    *
-*                       *
-*-----------------------*
-
 Intranet Epitech est une application Android permettant aux étudiants d'Epitech de se connecter à l'intranet.
 Ils peuvent ainsi consulter :
- - Profil
- - Notes
- - Modules
- - Planning
- - S'inscrire / désinscrire à une activité
+ * Profil
+ * Notes
+ * Modules
+ * Planning
+ * S'inscrire / désinscrire à une activité
  
 Cette application est un projet à réaliser en 3ème année par groupe de 2/3 personnes. 
 Elle est ainsi codée en JAVA sous Android Studio utilisant Graddle.
