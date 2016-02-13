@@ -162,14 +162,6 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         display_cur_projs();
     }
 
-
-    void settoast() {
-        if (Userinfos.count(Userinfos.class) == 0) {
-            drawer_layout.closeDrawer(GravityCompat.START);
-            startActivity(new Intent(this, ProjectsActivity_.class));
-        }
-   }
-
     @Background
     void loadInfos() {
         gUser = new GUser();
@@ -180,7 +172,6 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             api.setCookie("PHPSESSID", gUser.getToken());
             Puserinfos infos = new Puserinfos(api.getuserinfo(gUser.getLogin()));
             api.setCookie("PHPSESSID", gUser.getToken());
-            settoast();
             Pmessages msg = new Pmessages(api.getnotifs());
         }
         initMenu();
