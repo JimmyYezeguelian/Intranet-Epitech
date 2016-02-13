@@ -29,6 +29,8 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Random;
 
@@ -86,21 +88,53 @@ public class LoginActivity extends AppCompatActivity {
         return (sb.toString());
     }
 
+    boolean check_user(String token) {
+        String api = restapi.getuserinfo(token);
+        try {
+            JSONObject json = new JSONObject(api);
+            if (json.has("message")) {
+                return false;
+            }
+            if (json.has("title")) {
+                return true;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     @UiThread
     void ttt(String tokengenerate) {
         vlogin.setText(tokengenerate);
     }
 
+    @UiThread
+    void error_connect() {
+        Toast.makeText(getApplicationContext(), "Login / Mot de passe invalide", Toast.LENGTH_LONG).show();
+        vlogin.setText("");
+        vpasswd.setText("");
+    }
+
     boolean connectNetwork(String login, String passwd) {
         LoginRequest lr = new LoginRequest(login, passwd);
         String tokengenerate = generateToken();
-        //ttt(tokengenerate);
+        ttt(tokengenerate);
         restapi.setCookie("PHPSESSID", tokengenerate);
-        restapi.sendToken(lr);
-        User u = new User(login, passwd, tokengenerate, "true");
-        u.save();
-        // get herokuap api error to know if the token is valid
-        return false;
+        try {
+            restapi.sendToken(lr);
+            if (check_user(tokengenerate)) {
+                restapi.setCookie("PHPSESSID", tokengenerate);
+                Puserinfos infos = new Puserinfos(restapi.getuserinfo(tokengenerate));
+                User u = new User(login, passwd, tokengenerate, "true");
+                u.save();
+                return false;
+            }
+        } catch (Exception e) {
+            error_connect();
+            e.printStackTrace();
+        }
+        return true;
     }
 
     @UiThread
