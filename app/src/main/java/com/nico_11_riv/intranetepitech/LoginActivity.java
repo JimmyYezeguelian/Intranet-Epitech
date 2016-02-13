@@ -88,8 +88,8 @@ public class LoginActivity extends AppCompatActivity {
         return (sb.toString());
     }
 
-    boolean check_user(String token) {
-        String api = restapi.getuserinfo(token);
+    boolean check_user(String token, String login) {
+        String api = restapi.getuserinfo(login);
         try {
             JSONObject json = new JSONObject(api);
             if (json.has("message")) {
@@ -119,13 +119,12 @@ public class LoginActivity extends AppCompatActivity {
     boolean connectNetwork(String login, String passwd) {
         LoginRequest lr = new LoginRequest(login, passwd);
         String tokengenerate = generateToken();
-        ttt(tokengenerate);
         restapi.setCookie("PHPSESSID", tokengenerate);
         try {
             restapi.sendToken(lr);
-            if (check_user(tokengenerate)) {
+            if (check_user(tokengenerate, login)) {
                 restapi.setCookie("PHPSESSID", tokengenerate);
-                Puserinfos infos = new Puserinfos(restapi.getuserinfo(tokengenerate));
+                Puserinfos infos = new Puserinfos(restapi.getuserinfo(login));
                 User u = new User(login, passwd, tokengenerate, "true");
                 u.save();
                 return false;
