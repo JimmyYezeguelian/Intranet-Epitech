@@ -42,6 +42,8 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,8 +164,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
 
     void settoast() {
-        List<Userinfos> infos = Userinfos.find(Userinfos.class, "token = ?", gUser.getToken());
-        if (infos.size() == 0) {
+        if (Userinfos.count(Userinfos.class) == 0) {
             drawer_layout.closeDrawer(GravityCompat.START);
             startActivity(new Intent(this, ProjectsActivity_.class));
         }
