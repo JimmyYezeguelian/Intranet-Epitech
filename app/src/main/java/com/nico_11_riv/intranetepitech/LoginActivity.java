@@ -12,11 +12,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
-import com.nico_11_riv.intranetepitech.API.herokuapi;
 import com.nico_11_riv.intranetepitech.API.Requests.LoginRequest;
+import com.nico_11_riv.intranetepitech.API.herokuapi;
 import com.nico_11_riv.intranetepitech.API.intrapi;
+import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Puserinfos;
 import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.SUser;
 import com.nico_11_riv.intranetepitech.Database.User;
+import com.nico_11_riv.intranetepitech.Database.Userinfos;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -27,7 +29,6 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Random;
 
@@ -85,9 +86,15 @@ public class LoginActivity extends AppCompatActivity {
         return (sb.toString());
     }
 
+    @UiThread
+    void ttt(String tokengenerate) {
+        vlogin.setText(tokengenerate);
+    }
+
     boolean connectNetwork(String login, String passwd) {
         LoginRequest lr = new LoginRequest(login, passwd);
         String tokengenerate = generateToken();
+        //ttt(tokengenerate);
         restapi.setCookie("PHPSESSID", tokengenerate);
         restapi.sendToken(lr);
         User u = new User(login, passwd, tokengenerate, "true");

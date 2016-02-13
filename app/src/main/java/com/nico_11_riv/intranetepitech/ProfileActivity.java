@@ -167,8 +167,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             Userinfos.deleteAll(Userinfos.class, "token = ?", gUser.getToken());
             Messages.deleteAll(Messages.class, "token = ?", gUser.getToken());
             api.setCookie("PHPSESSID", gUser.getToken());
-            String result = api.getuserinfo(gUser.getLogin());
-            Puserinfos infos = new Puserinfos(result);
+            Puserinfos infos = new Puserinfos(api.getuserinfo(gUser.getLogin()));
             api.setCookie("PHPSESSID", gUser.getToken());
             Pmessages msg = new Pmessages(api.getnotifs());
         }

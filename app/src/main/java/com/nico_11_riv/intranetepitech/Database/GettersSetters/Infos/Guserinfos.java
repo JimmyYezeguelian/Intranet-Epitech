@@ -23,10 +23,8 @@ public class Guserinfos {
 
     public Guserinfos() {
         GUser gUser = new GUser();
-        String utoken = gUser.getToken();
-
-        if (utoken != null) {
-            List<Userinfos> infos = Userinfos.find(Userinfos.class, "token = ?", utoken);
+        if (gUser.getToken() != null) {
+            List<Userinfos> infos = Userinfos.find(Userinfos.class, "token = ?", gUser.getToken());
             Userinfos info = infos.get(0);
             this.token = info.getToken();
             this.login = info.getLogin();
