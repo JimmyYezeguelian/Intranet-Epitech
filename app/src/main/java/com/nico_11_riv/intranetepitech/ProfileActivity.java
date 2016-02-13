@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
 import com.nico_11_riv.intranetepitech.API.Requests.InfosRequest;
@@ -159,6 +160,15 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         display_cur_projs();
     }
 
+
+    void settoast() {
+        List<Userinfos> infos = Userinfos.find(Userinfos.class, "token = ?", gUser.getToken());
+        if (infos.size() == 0) {
+            drawer_layout.closeDrawer(GravityCompat.START);
+            startActivity(new Intent(this, ProjectsActivity_.class));
+        }
+   }
+
     @Background
     void loadInfos() {
         gUser = new GUser();
@@ -169,6 +179,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             api.setCookie("PHPSESSID", gUser.getToken());
             Puserinfos infos = new Puserinfos(api.getuserinfo(gUser.getLogin()));
             api.setCookie("PHPSESSID", gUser.getToken());
+            settoast();
             Pmessages msg = new Pmessages(api.getnotifs());
         }
         initMenu();

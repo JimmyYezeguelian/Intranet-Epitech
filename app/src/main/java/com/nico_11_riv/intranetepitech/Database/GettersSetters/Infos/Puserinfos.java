@@ -12,13 +12,13 @@ public class Puserinfos {
             GUser u = new GUser();
             JSONObject json = new JSONObject(api);
             if (json.has("login")) {
-                Userinfos userinfos = new Userinfos();
-                userinfos.setToken(u.getToken());
+                Userinfos userinfos = new Userinfos(u.getToken());
                 userinfos.setLogin(json.getString("login"));
                 userinfos.setTitle(json.getString("title"));
                 userinfos.setLastname(json.getString("lastname"));
                 userinfos.setFirstname(json.getString("firstname"));
                 userinfos.setEmail(json.getJSONObject("userinfo").getJSONObject("email").getString("value"));
+                userinfos.setScolaryear(json.getString("scolaryear"));
                 userinfos.setPicture(json.getString("picture"));
                 userinfos.setPromo(json.getString("promo"));
                 userinfos.setSemester(json.getString("semester"));

@@ -1,5 +1,6 @@
 package com.nico_11_riv.intranetepitech.Database;
 
+import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
 import com.orm.SugarRecord;
 
 public class Userinfos extends SugarRecord {
@@ -10,6 +11,7 @@ public class Userinfos extends SugarRecord {
     private String firstname;
     private String email;
     private String picture;
+    private String scolaryear;
     private String promo;
     private String semester;
     private String location;
@@ -19,6 +21,12 @@ public class Userinfos extends SugarRecord {
     private String gpa;
 
     public Userinfos() {
+        GUser u = new GUser();
+        this.token = u.getToken();
+    }
+
+    public Userinfos(String token) {
+        this.token = token;
     }
 
     public String getToken() {
@@ -131,5 +139,13 @@ public class Userinfos extends SugarRecord {
 
     public void setGpa(String gpa) {
         this.gpa = gpa;
+    }
+
+    public String getScolaryear() {
+        return scolaryear;
+    }
+
+    public void setScolaryear(String scolaryear) {
+        this.scolaryear = scolaryear;
     }
 }

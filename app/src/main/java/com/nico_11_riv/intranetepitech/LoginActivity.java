@@ -123,10 +123,10 @@ public class LoginActivity extends AppCompatActivity {
         try {
             restapi.sendToken(lr);
             if (check_user(tokengenerate, login)) {
-                restapi.setCookie("PHPSESSID", tokengenerate);
-                Puserinfos infos = new Puserinfos(restapi.getuserinfo(login));
                 User u = new User(login, passwd, tokengenerate, "true");
                 u.save();
+                restapi.setCookie("PHPSESSID", tokengenerate);
+                Puserinfos infos = new Puserinfos(restapi.getuserinfo(login));
                 return false;
             }
         } catch (Exception e) {
