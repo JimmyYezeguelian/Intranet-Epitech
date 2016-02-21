@@ -1,4 +1,4 @@
-package com.nico_11_riv.intranetepitech.UI.Adapters;
+package com.nico_11_riv.intranetepitech.ui.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nico_11_riv.intranetepitech.UI.Contents.Messages_content;
+import com.nico_11_riv.intranetepitech.ui.contents.Messages_content;
 import com.nico_11_riv.intranetepitech.R;
 import com.squareup.picasso.Picasso;
 

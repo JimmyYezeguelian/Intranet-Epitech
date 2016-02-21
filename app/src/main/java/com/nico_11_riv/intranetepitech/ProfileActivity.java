@@ -16,21 +16,20 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
-import com.nico_11_riv.intranetepitech.API.Requests.InfosRequest;
-import com.nico_11_riv.intranetepitech.API.intrapi;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.CircleTransform;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Guserinfos;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Puserinfos;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Messages.Pmessages;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
-import com.nico_11_riv.intranetepitech.Database.Messages;
-import com.nico_11_riv.intranetepitech.Database.User;
-import com.nico_11_riv.intranetepitech.Database.Userinfos;
-import com.nico_11_riv.intranetepitech.UI.Adapters.MessagesAdapter;
-import com.nico_11_riv.intranetepitech.UI.Contents.Messages_content;
+import com.nico_11_riv.intranetepitech.api.APIErrorHandler;
+import com.nico_11_riv.intranetepitech.api.requests.InfosRequest;
+import com.nico_11_riv.intranetepitech.api.IntrAPI;
+import com.nico_11_riv.intranetepitech.database.setters.infos.CircleTransform;
+import com.nico_11_riv.intranetepitech.database.setters.infos.Guserinfos;
+import com.nico_11_riv.intranetepitech.database.setters.infos.Puserinfos;
+import com.nico_11_riv.intranetepitech.database.setters.messages.Pmessages;
+import com.nico_11_riv.intranetepitech.database.setters.user.GUser;
+import com.nico_11_riv.intranetepitech.database.Messages;
+import com.nico_11_riv.intranetepitech.database.User;
+import com.nico_11_riv.intranetepitech.database.Userinfos;
+import com.nico_11_riv.intranetepitech.ui.adapters.MessagesAdapter;
+import com.nico_11_riv.intranetepitech.ui.contents.Messages_content;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 import com.squareup.picasso.Picasso;
@@ -42,8 +41,6 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +49,7 @@ import java.util.List;
 public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @RestService
-    intrapi api;
+    IntrAPI api;
 
     @Bean
     APIErrorHandler ErrorHandler;

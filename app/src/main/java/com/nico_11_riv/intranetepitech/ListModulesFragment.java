@@ -7,8 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nico_11_riv.intranetepitech.UI.Contents.Messages_content;
-import com.nico_11_riv.intranetepitech.UI.Contents.Modules_content;
+import com.nico_11_riv.intranetepitech.ui.contents.Modules_content;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -16,7 +15,6 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 @EFragment(R.layout.listmodules)

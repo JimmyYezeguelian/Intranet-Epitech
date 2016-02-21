@@ -1,9 +1,9 @@
-package com.nico_11_riv.intranetepitech.API.Requests;
+package com.nico_11_riv.intranetepitech.api.requests;
 
 import org.springframework.util.LinkedMultiValueMap;
 
-public class unRegisterEventRequest extends LinkedMultiValueMap<String, String> {
-    public unRegisterEventRequest(String token, String scolaryear, String codemodule, String codeinstance, String codeacti, String codeevent) {
+public class UnregisterEventRequest extends LinkedMultiValueMap<String, String> {
+    public UnregisterEventRequest(String token, String scolaryear, String codemodule, String codeinstance, String codeacti, String codeevent) {
         add("token", token);
         add("scolaryear", scolaryear);
         add("codemodule", codemodule);

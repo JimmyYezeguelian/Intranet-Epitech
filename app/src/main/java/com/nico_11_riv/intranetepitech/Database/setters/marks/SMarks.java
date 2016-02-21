@@ -1,13 +1,11 @@
-package com.nico_11_riv.intranetepitech.Database.GettersSetters.Marks;
+package com.nico_11_riv.intranetepitech.database.setters.marks;
 
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
-import com.nico_11_riv.intranetepitech.Database.Marks;
+import com.nico_11_riv.intranetepitech.database.setters.user.GUser;
+import com.nico_11_riv.intranetepitech.database.Marks;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Objects;
 
 public class SMarks {
     public SMarks (String api) {

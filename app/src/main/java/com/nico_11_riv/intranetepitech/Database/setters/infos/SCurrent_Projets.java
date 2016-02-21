@@ -1,6 +1,6 @@
-package com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos;
+package com.nico_11_riv.intranetepitech.database.setters.infos;
 
-import com.nico_11_riv.intranetepitech.Database.Current_Projets;
+import com.nico_11_riv.intranetepitech.database.Current_Projets;
 
 import org.json.JSONArray;
 import org.json.JSONException;

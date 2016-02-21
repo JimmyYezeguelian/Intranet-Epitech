@@ -1,17 +1,15 @@
-package com.nico_11_riv.intranetepitech.Database.GettersSetters.Planning;
+package com.nico_11_riv.intranetepitech.database.setters.planning;
 
 /**
  * Created by victor on 19/01/2016.
  */
 
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
-import com.nico_11_riv.intranetepitech.Database.Planning;
+import com.nico_11_riv.intranetepitech.database.setters.user.GUser;
+import com.nico_11_riv.intranetepitech.database.Planning;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Objects;
 
 
 public class Pplanning {

@@ -1,7 +1,7 @@
-package com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos;
+package com.nico_11_riv.intranetepitech.database.setters.infos;
 
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
-import com.nico_11_riv.intranetepitech.Database.Userinfos;
+import com.nico_11_riv.intranetepitech.database.setters.user.GUser;
+import com.nico_11_riv.intranetepitech.database.Userinfos;
 
 import java.util.List;
 

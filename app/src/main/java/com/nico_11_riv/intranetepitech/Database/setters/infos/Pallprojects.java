@@ -1,8 +1,7 @@
-package com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos;
+package com.nico_11_riv.intranetepitech.database.setters.infos;
 
-import com.nico_11_riv.intranetepitech.Database.Allprojects;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Modules.Pallmodules;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
+import com.nico_11_riv.intranetepitech.database.Allprojects;
+import com.nico_11_riv.intranetepitech.database.setters.user.GUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,4 +1,4 @@
-package com.nico_11_riv.intranetepitech.API.Requests;
+package com.nico_11_riv.intranetepitech.api.requests;
 
 import org.springframework.util.LinkedMultiValueMap;
 

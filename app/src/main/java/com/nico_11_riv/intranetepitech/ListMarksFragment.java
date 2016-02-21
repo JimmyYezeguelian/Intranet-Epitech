@@ -6,7 +6,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nico_11_riv.intranetepitech.UI.Contents.Mark_content;
+import com.nico_11_riv.intranetepitech.ui.contents.Mark_content;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;

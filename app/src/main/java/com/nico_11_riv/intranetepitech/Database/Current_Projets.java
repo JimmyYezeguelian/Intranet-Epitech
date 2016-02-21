@@ -1,4 +1,4 @@
-package com.nico_11_riv.intranetepitech.Database;
+package com.nico_11_riv.intranetepitech.database;
 
 import com.orm.SugarRecord;
 

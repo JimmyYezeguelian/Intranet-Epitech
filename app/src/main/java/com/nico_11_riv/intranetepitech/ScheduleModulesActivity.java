@@ -14,26 +14,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
-import com.nico_11_riv.intranetepitech.API.intrapi;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.CircleTransform;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Guserinfos;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Planning.Pplanning;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
-import com.nico_11_riv.intranetepitech.Database.Planning;
-import com.nico_11_riv.intranetepitech.Database.User;
-import com.nico_11_riv.intranetepitech.UI.Adapters.ScheduleAdpater;
-import com.nico_11_riv.intranetepitech.UI.Contents.Schedule_content;
+import com.nico_11_riv.intranetepitech.api.APIErrorHandler;
+import com.nico_11_riv.intranetepitech.api.IntrAPI;
+import com.nico_11_riv.intranetepitech.database.setters.infos.CircleTransform;
+import com.nico_11_riv.intranetepitech.database.setters.infos.Guserinfos;
+import com.nico_11_riv.intranetepitech.database.setters.planning.Pplanning;
+import com.nico_11_riv.intranetepitech.database.setters.user.GUser;
+import com.nico_11_riv.intranetepitech.database.Planning;
+import com.nico_11_riv.intranetepitech.database.User;
+import com.nico_11_riv.intranetepitech.ui.adapters.ScheduleAdpater;
+import com.nico_11_riv.intranetepitech.ui.contents.Schedule_content;
 import com.squareup.picasso.Picasso;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
@@ -52,7 +49,7 @@ public class ScheduleModulesActivity extends AppCompatActivity implements Naviga
     private static int week = 0;
 
     @RestService
-    intrapi api;
+    IntrAPI api;
 
     @Bean
     APIErrorHandler ErrorHandler;

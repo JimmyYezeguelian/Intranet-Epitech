@@ -1,7 +1,6 @@
-package com.nico_11_riv.intranetepitech.Database.GettersSetters.User;
+package com.nico_11_riv.intranetepitech.database.setters.user;
 
-import com.google.gson.Gson;
-import com.nico_11_riv.intranetepitech.Database.User;
+import com.nico_11_riv.intranetepitech.database.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;

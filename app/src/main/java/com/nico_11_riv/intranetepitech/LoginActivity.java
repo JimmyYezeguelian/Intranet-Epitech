@@ -11,14 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
-import com.nico_11_riv.intranetepitech.API.Requests.LoginRequest;
-import com.nico_11_riv.intranetepitech.API.herokuapi;
-import com.nico_11_riv.intranetepitech.API.intrapi;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Puserinfos;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.SUser;
-import com.nico_11_riv.intranetepitech.Database.User;
-import com.nico_11_riv.intranetepitech.Database.Userinfos;
+import com.nico_11_riv.intranetepitech.api.APIErrorHandler;
+import com.nico_11_riv.intranetepitech.api.requests.LoginRequest;
+import com.nico_11_riv.intranetepitech.api.HerokuAPI;
+import com.nico_11_riv.intranetepitech.api.IntrAPI;
+import com.nico_11_riv.intranetepitech.database.setters.infos.Puserinfos;
+import com.nico_11_riv.intranetepitech.database.setters.user.SUser;
+import com.nico_11_riv.intranetepitech.database.User;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -38,10 +37,10 @@ import java.util.Random;
 public class LoginActivity extends AppCompatActivity {
 
     @RestService
-    herokuapi API;
+    HerokuAPI API;
 
     @RestService
-    intrapi restapi;
+    IntrAPI restapi;
 
     @Bean
     APIErrorHandler ErrorHandler;

@@ -7,12 +7,12 @@ import android.net.ConnectivityManager;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
-import com.nico_11_riv.intranetepitech.API.APIErrorHandler;
-import com.nico_11_riv.intranetepitech.API.intrapi;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos.Guserinfos;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.Planning.Pplanning;
-import com.nico_11_riv.intranetepitech.Database.GettersSetters.User.GUser;
-import com.nico_11_riv.intranetepitech.Database.Planning;
+import com.nico_11_riv.intranetepitech.api.APIErrorHandler;
+import com.nico_11_riv.intranetepitech.api.IntrAPI;
+import com.nico_11_riv.intranetepitech.database.setters.infos.Guserinfos;
+import com.nico_11_riv.intranetepitech.database.setters.planning.Pplanning;
+import com.nico_11_riv.intranetepitech.database.setters.user.GUser;
+import com.nico_11_riv.intranetepitech.database.Planning;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -35,7 +35,7 @@ public class ListScheduleFragment extends Fragment implements MonthLoader.MonthC
 
     private static int week = 1;
     @RestService
-    intrapi api;
+    IntrAPI api;
     @Bean
     APIErrorHandler ErrorHandler;
     @ViewById

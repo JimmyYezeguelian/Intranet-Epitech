@@ -1,4 +1,4 @@
-package com.nico_11_riv.intranetepitech.UI.Contents;
+package com.nico_11_riv.intranetepitech.ui.contents;
 
 public class Schedule_content {
     private String semester;

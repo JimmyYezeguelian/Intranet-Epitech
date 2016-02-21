@@ -1,4 +1,4 @@
-package com.nico_11_riv.intranetepitech.API;
+package com.nico_11_riv.intranetepitech.api;
 
 import android.app.Application;
 import android.content.Context;

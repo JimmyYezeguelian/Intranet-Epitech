@@ -1,4 +1,4 @@
-package com.nico_11_riv.intranetepitech.UI.Adapters;
+package com.nico_11_riv.intranetepitech.ui.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.nico_11_riv.intranetepitech.UI.Contents.Projects_content;
+import com.nico_11_riv.intranetepitech.ui.contents.Projects_content;
 import com.nico_11_riv.intranetepitech.R;
 
 import java.util.ArrayList;

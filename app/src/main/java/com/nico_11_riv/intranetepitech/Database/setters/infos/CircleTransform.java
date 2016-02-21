@@ -1,4 +1,4 @@
-package com.nico_11_riv.intranetepitech.Database.GettersSetters.Infos;
+package com.nico_11_riv.intranetepitech.database.setters.infos;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;

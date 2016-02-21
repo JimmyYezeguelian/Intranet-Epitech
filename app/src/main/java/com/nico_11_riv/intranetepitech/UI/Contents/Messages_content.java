@@ -1,4 +1,4 @@
-package com.nico_11_riv.intranetepitech.UI.Contents;
+package com.nico_11_riv.intranetepitech.ui.contents;
 
 public class Messages_content {
     private String titleMessage;
